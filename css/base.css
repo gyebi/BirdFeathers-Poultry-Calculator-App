@@ -94,3 +94,22 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 
 }
+
+
+.cost-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.cost-row.total {
+  font-weight: 700;
+  font-size: 18px;
+}
