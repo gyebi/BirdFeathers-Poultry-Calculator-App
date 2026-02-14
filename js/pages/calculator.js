@@ -134,7 +134,7 @@ if (rateOfLay < threshold) {
   const profit = totalRevenue - totalCost;
   profitEl.textContent = format(profit);
 
-  if (profit >= 0) {
+  if (profit > 0) {
     profitEl.textContent = `Congratulations! Going by your entries, you made a profit of ${format(profit)}`;
   } else if (profit < 0) {
     profitEl.textContent = `Unfortunately, based on your entries, you incurred a loss of ${format(profit)}`;
