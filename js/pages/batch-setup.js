@@ -7,7 +7,7 @@ export function init() {
   const saveBtn = document.getElementById("saveBatch");
 
   console.log("Batch screen loaded");
-console.log(document.getElementById("birdSummary"));
+  console.log(document.getElementById("birdSummary"));
 
 
     // Display selected birds

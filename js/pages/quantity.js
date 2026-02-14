@@ -51,7 +51,7 @@ export function init() {
 ) {
   navigate("rearing-duration");
 } else {
- navigate(batch-setup)
+ navigate("batch-setup");
 }
 
     console.log("Bird quantities saved:", state.birds);

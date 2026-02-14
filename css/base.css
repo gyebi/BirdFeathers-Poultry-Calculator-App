@@ -2,8 +2,14 @@
   padding: 0px;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
 .home {
-  min-height: 100vh;
+  min-height:auto;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -67,7 +73,7 @@
 }
 
 .bottom-cta  {
-  width: 93%;
+  width: 95%;
   padding: 16px;
   border-radius: 16px;
   border: none;

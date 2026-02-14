@@ -22,8 +22,15 @@ export function init() {
   const layers = state.birds.layers || 0;
 
   // Basic broiler feed formula (5kg per bird)
-  const totalKg = broilers * 5;
-  const totalBags = totalKg / state.feed.bagWeight;
+  const totalKgB = broilers * 5;
+  const totalBagsB = totalKgB / state.feed.bagWeight;
+
+  // Basic Layer feed formula ( per bird)
+  const totalKgL = layers * 9;
+  const totalBagsL = totalKgL / state.feed.bagWeight;
+
+  const totalKg = totalKgB + totalKgL;
+  const totalBags = totalBagsB + totalBagsL;
 
   state.feed.totalKg = totalKg;
   state.feed.totalBags = totalBags;
@@ -37,6 +44,6 @@ export function init() {
     state.feed.bagPrice =
       Number(bagInput.value) || 0;
 
-    navigate("calculator");
+    navigate("revenue");
   });
 }

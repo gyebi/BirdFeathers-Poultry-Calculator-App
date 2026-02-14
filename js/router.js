@@ -7,6 +7,7 @@ const routes = {
   "rearing-duration": "pages/rearing-duration.html",
   "batch-setup": "pages/batch-setup.html",
   feed:"pages/feed.html",
+  revenue:"pages/revenue.html",
   calculator: "pages/calculator.html"
 };
 
