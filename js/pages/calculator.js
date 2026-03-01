@@ -30,12 +30,10 @@ export function init() {
 
   // 🐔 Chick Cost
   const broilerTotal =
-    (state.birds.broilers || 0) *
-    (state.batch.broilerCost || 0);
+    (state.birds.broilers || 0) * (state.batch.broilerCost || 0);
 
   const layerTotal =
-    (state.birds.layers || 0) *
-    (state.batch.layerCost || 0);
+    (state.birds.layers || 0) * (state.batch.layerCost || 0);
 
   const chickCost = broilerTotal + layerTotal;
 
@@ -43,31 +41,87 @@ export function init() {
   console.log("Layer Chick Cost:", layerTotal);
   console.log("Total Chick Cost:", chickCost);
 
-  // 🌾 Feed Cost
-  const feedCost =
-    (state.feed.totalBags || 0) *
-    (state.feed.bagPrice || 0);
+  //Survival calculations
 
-  // 🧮 Total Cost
-  const totalCost = chickCost + feedCost;
-
-
-
-  chickCostEl.textContent = format(chickCost);
-  feedCostEl.textContent = format(feedCost);
-  totalCostEl.textContent = format(totalCost);
-
-
-
-  // SURVIVAL CALCULATIONS
-
-const survivingBroilers =
+  const survivingBroilers =
   state.birds.broilers *
   (1 - (state.mortality.broilerRate || 0) / 100);
 
 const survivingLayers =
   state.birds.layers *
   (1 - (state.mortality.layerRate || 0) / 100);
+
+  // 🌾 Feed Cost
+ //Broliers 
+  const broilerStarter = state.feed.broilers.broilerStarter.totalKg;
+  const broilerFinisher = state.feed.broilers.broilerFinisher.totalKg;
+
+  console.log("Broiler Starter in Kg:", broilerStarter);
+  console.log("Broiler Finisher in Kg:", broilerFinisher);
+
+  const broilerStarterBags = state.feed.broilers.broilerStarter.totalBags;
+  const broilerFinisherBags = state.feed.broilers.broilerFinisher.totalBags;
+
+  console.log("Broiler Starter Bags:", broilerStarterBags);
+  console.log("Broiler Finisher Bags:", broilerFinisherBags);
+
+  const totalBags = broilerStarterBags + broilerFinisherBags;
+
+  console.log("Total Broiler Bags:", totalBags);
+
+  const feedCostBroiler = broilerStarterBags * (state.feed.bagPrice || 0);
+  const feedCostFinisher = broilerFinisherBags * (state.feed.bagPrice || 0);
+
+  console.log("Broiler Starter Feed Cost:", feedCostBroiler);
+  console.log("Broiler Finisher Feed Cost:", feedCostFinisher);
+
+  const TotalFeedCostBroilers = feedCostBroiler + feedCostFinisher;
+  
+  console.log("Total Feed Cost for Broilers:", TotalFeedCostBroilers);
+
+// Layers
+  const layerStarter = state.feed.layers.layerStarter.totalKg;
+  const layerGrower = state.feed.layers.layerGrower.totalKg;
+  console.log("Layer Starter in Kg:", layerStarter);
+  console.log("Layer Grower in Kg:", layerGrower);
+
+  const layerStarterBags = state.feed.layers.layerStarter.totalBags;
+  const layerGrowerBags = state.feed.layers.layerGrower.totalBags;
+  console.log("Layer Starter Bags:", layerStarterBags);
+  console.log("Layer Grower Bags:", layerGrowerBags);
+
+
+  //Layer Marsh 
+
+  // Layer Marsh 
+  //surviving layers * Daily feed per layer * cycle days 
+
+
+  // Store Layer Mash
+  const layerMashBags = state.feed.layers.layerMash.totalBags;
+  const costLayerMash = layerMashBags * (state.feed.bagPrice || 0);
+  console.log("Layer Mash Cost:", costLayerMash);    
+
+  
+
+  const feedCostLayerStarter = layerStarterBags * (state.feed.bagPrice || 0);
+  const feedCostLayerGrower = layerGrowerBags * (state.feed.bagPrice || 0);
+
+  console.log("Layer Starter Feed Cost:", feedCostLayerStarter);
+  console.log("Layer Grower Feed Cost:", feedCostLayerGrower);
+  console.log("Layer Mash Feed Cost:", costLayerMash);
+
+  const TotalFeedCostLayers = feedCostLayerStarter + feedCostLayerGrower + costLayerMash;
+  console.log("Total Feed Cost for Layers:", TotalFeedCostLayers);
+
+
+  // 🧮 Total Cost
+  const totalCost = chickCost + TotalFeedCostBroilers + TotalFeedCostLayers;
+
+  chickCostEl.textContent = format(chickCost);
+  feedCostEl.textContent = format(TotalFeedCostBroilers + TotalFeedCostLayers );
+  totalCostEl.textContent = format(totalCost);
+
 
 // BROILER REVENUE
 const avgWeight =

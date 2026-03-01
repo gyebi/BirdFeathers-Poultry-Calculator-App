@@ -46,10 +46,13 @@ export function init() {
       Number(document.getElementById("layerCount")?.value) || 0;
 
          if (
+
   state.flow.birdType === "broiler" ||
   state.flow.birdType === "both"
 ) {
+
   navigate("rearing-duration");
+  
 } else {
  navigate("batch-setup");
 }

@@ -17,11 +17,7 @@ export function init() {
       </label>
         
 
-        <label>
-        Broiler Price per Bird
-        <input id="broilerPricePerBird" type="number" step="0.01" />
-      </label>
-
+       
         <label>
         Selling Price per Bird
         <input id="broilerSellPrice" type="number" step="0.01" />

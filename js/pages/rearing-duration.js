@@ -9,6 +9,7 @@ export function init() {
       const weeks = Number(btn.dataset.weeks);
 
       state.production.broilerWeeks = weeks;
+      //state.production.layerWeeks = weeks;
 
       console.log("Broiler duration selected:", weeks);
 
