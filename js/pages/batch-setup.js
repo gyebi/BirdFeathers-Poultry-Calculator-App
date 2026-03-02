@@ -59,6 +59,6 @@ saveBtn.addEventListener("click", () => {
     state.batch.layerCost =
       Number(document.getElementById("layerPrice")?.value) || 0;
 
-    navigate("feed");
+    navigate("feed-market-prices");
   });
 }

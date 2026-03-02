@@ -18,7 +18,9 @@ const feedRules = {
 export function init() {
   const summary = document.getElementById("feedSummary");
   const bagInput = document.getElementById("bagPrice");
+
   const saveBtn = document.getElementById("saveFeed");
+  const backBtn = document.getElementById("backFeed");
 
  
   const broilers = state.birds.broilers || 0;
@@ -114,16 +116,58 @@ export function init() {
   const totalKg = totalKgB + totalKgL;
   const totalBags = totalBagsB + totalBagsL;
 
+
+  if (broilers > 0 && layers > 0) {
   summary.innerHTML = `
+    <p>Broiler Starter Feed: ${broilerStarterKg.toFixed(2)} kg (${totalBagsStarter.toFixed(2)} bags)</p>
+    <p>Broiler Finisher Feed: ${broilerFinisherKg.toFixed(2)} kg (${totalBagsFinisher.toFixed(2)} bags)</p>
+    <p>Layer Starter Feed: ${layerStarterKg.toFixed(2)} kg (${totalBagsLayerStarter.toFixed(2)} bags)</p>
+    <p>Layer Grower Feed: ${layerGrowerKg.toFixed(2)} kg (${totalBagsLayerGrower.toFixed(2)} bags)</p>
+    <p>Layer Mash Feed: ${totalLayerMashKg.toFixed(2)} kg (${totalBagsLayerMash.toFixed(2)} bags)</p>
+    <h2>Feed Summary</h2>
     <p>Total Feed Required: ${totalKg} kg</p>
     <p>Equivalent Bags (50kg): ${totalBags.toFixed(2)}</p>
+    <p>Broiler Starter Cost per Bag: ${state.feed.broilers.broilerStarter.bagPrice.toFixed(2)} </p>
+    <p>Broiler Finisher Cost per Bag: ${state.feed.broilers.broilerFinisher.bagPrice.toFixed(2)} </p>
+    <p>Layer Starter Cost per Bag: ${state.feed.layers.layerStarter.bagPrice.toFixed(2)} </p>
+    <p>Layer Grower Cost per Bag: ${state.feed.layers.layerGrower.bagPrice.toFixed(2)} </p>
+    <p>Layer Mash Cost per Bag: ${state.feed.layers.layerMash.bagPrice.toFixed(2)} </p>
   `;
+  } else if (broilers > 0) {
+    summary.innerHTML = `
+    <p>Broiler Starter Feed: ${broilerStarterKg.toFixed(2)} kg (${totalBagsStarter.toFixed(2)} bags)</p>
+    <p>Broiler Finisher Feed: ${broilerFinisherKg.toFixed(2)} kg (${totalBagsFinisher.toFixed(2)} bags)</p>
+    <h2>Feed Summary</h2>
+    <p>Total Feed Required: ${totalKgB} kg</p>
+    <p>Equivalent Bags (50kg): ${totalBagsB.toFixed(2)}</p>
+    <p>Broiler Starter Cost per Bag: ${state.feed.broilers.broilerStarter.bagPrice.toFixed(2)} </p>
+    <p>Broiler Finisher Cost per Bag: ${state.feed.broilers.broilerFinisher.bagPrice.toFixed(2)} </p>
+  `;
+  } else if (layers > 0) {
+    summary.innerHTML = `
+    <p>Layer Starter Feed: ${layerStarterKg.toFixed(2)} kg (${totalBagsLayerStarter.toFixed(2)} bags)</p>
+    <p>Layer Grower Feed: ${layerGrowerKg.toFixed(2)} kg (${totalBagsLayerGrower.toFixed(2)} bags)</p>
+    <p>Layer Mash Feed: ${totalLayerMashKg.toFixed(2)} kg (${totalBagsLayerMash.toFixed(2)} bags)</p>
+    <h2>Feed Summary</h2>
+    <p>Total Feed Required: ${totalKgL} kg</p>
+    <p>Equivalent Bags (50kg): ${totalBagsL.toFixed(2)}</p>
+    <p>Layer Starter Cost per Bag: ${state.feed.layers.layerStarter.bagPrice.toFixed(2)} </p>
+    <p>Layer Grower Cost per Bag: ${state.feed.layers.layerGrower.bagPrice.toFixed(2)} </p>
+    <p>Layer Mash Cost per Bag: ${state.feed.layers.layerMash.bagPrice.toFixed(2)} </p>
+  `;
+  } else {
+    summary.innerHTML = `<p>No birds added. Please go back and enter bird details.</p>`;
+  }
 
   saveBtn.addEventListener("click", () => {
-    state.feed.bagPrice =
-      Number(bagInput.value) || 0;
-
+  
     navigate("revenue");
+
+  });
+
+    backBtn.addEventListener("click", () => {
+  
+    navigate("feed-market-prices");
 
   });
 }
