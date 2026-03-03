@@ -235,9 +235,58 @@ console.log("Total Revenue:", totalRevenue);
    saveBtn.addEventListener("click", () => {
     saveSummaryToLocal();
       alert("Summary saved to local storage!");
+
+      navigate("bird-type");
   });
 
   console.log("Saved cycles:", getAllCycles());
+
+  
+
+  function getLatestCycle() {
+  const cycles = JSON.parse(localStorage.getItem("bf_cycles")) || [];
+  return cycles[cycles.length - 1] || null;
+}
+
+document.getElementById("aiInsightsBtn").addEventListener("click", async () => {
+  const latest = getLatestCycle();
+  if (!latest) {
+    alert("No saved cycle found. Save a summary first.");
+    return;
+  }
+
+  const function_url = "https://us-central1-birdfeathers-ai.cloudfunctions.net/aiInsights";
+
+  const box = document.getElementById("aiInsightsBox");
+  box.innerHTML = "Generating AI insights...";
+
+  try {
+    const res = await fetch(function_url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cycle: latest })
+    });
+
+    if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+    const data = await res.json();
+
+    // Render nicely
+    box.innerHTML = `
+      <h3>Summary</h3>
+      <p>${data.summary}</p>
+
+      <h3>Warnings</h3>
+      <ul>${data.warnings.map(w => `<li>${w}</li>`).join("")}</ul>
+
+      <h3>Recommendations</h3>
+      <ul>${data.recommendations.map(r => `<li>${r}</li>`).join("")}</ul>
+    `;
+  } catch (err) {
+    console.error(err);
+    box.innerHTML = "Failed to generate AI insights.";
+  }
+});
 
 }
 
